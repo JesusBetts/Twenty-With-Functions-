@@ -10,20 +10,21 @@ function randNum() {
     var rand = Math.floor(Math.random() * 10) + 1;
     return rand;
 }
-function userFun(number) {
+function userFun() {
 	var userTotal = 0;
 	var stand = "y";
     do {
-		userTotal = userTotal + number;
+		userTotal = userTotal + randNum();
 		stand = prompt(`You currently have ${userTotal}. Enter "y" to keep drawing cards and "n" to stand and stop drawing.`);
 		
 	} while ((stand == "y") && (stand != "n"));
 	return userTotal;
 }
-function comFun(number) {
+function comFun() {
 	var compTotal = 0;
     do {
-		compTotal = compTotal + number	
+		compTotal = compTotal + randNum();
+		alert(`The computer has ${compTotal}`)
 	} while ( compTotal <= 15);
 	return compTotal;
 }
@@ -43,7 +44,7 @@ function compNum(com, user) {
 		compwin = "n"
 	}
 	if ((user > com) && (user <= 20)){
-		alert(`You wins! You had ${user} and the computer had ${com}`)
+		alert(`You win! You had ${user} and the computer had ${com}`)
 		userwin = "y"
 		compwin = "n"
 	}
@@ -52,18 +53,19 @@ function compNum(com, user) {
 		compwin = "y"
 		userwin = "n"
 	}
-	if ((userwin == "y") && (compwin == "n")){
-		wins = wins++
-	} else if ((compwin == "y") && (userwin == "n")){
-		losses = losses++
+	if (userwin == "y") {
+		wins = wins + 1
+	} 
+	if (compwin == "y"){
+		losses = losses + 1
 	}
 }
-function game() {
+function game(name) {
 	do{
 		retry = "n";
-		askName();
-		compNum(comFun(randNum()), userFun(randNum()));
+		compNum( comFun(), userFun() );
+		alert(`${name} currently has won ${wins} matches and the computer has won a total of ${losses} times`)
 		retry = prompt(`Do you want to play again? Type "y" retry or "n" to stop`)
 	}while(retry == "y")
 }
-game();
+game(askName());
